@@ -1,0 +1,14 @@
+{
+  "name": "groundmail",
+  "version": "0.5.9",
+  "description": "Send transactional email with Groundmail from Claude Code: API, SDK and SMTP skills plus the hosted Groundmail MCP server.",
+  "author": {
+    "name": "Groundmail",
+    "email": "contact@groundmail.dev",
+    "url": "https://groundmail.dev"
+  },
+  "homepage": "https://docs.groundmail.dev/ai/agent-skills",
+  "repository": "https://github.com/Groundmail/groundmail-skills",
+  "license": "MIT",
+  "keywords": ["email", "transactional-email", "smtp", "mcp", "groundmail"]
+}

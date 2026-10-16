@@ -1,0 +1,37 @@
+---
+description: Groundmail transactional email. Use when sending email, adding email to an app, or working with GROUNDMAIL_API_KEY, gm_ keys, api.groundmail.dev, the groundmail npm package or the Groundmail MCP server.
+globs:
+alwaysApply: false
+---
+
+# Groundmail
+
+Groundmail is a transactional email API. Docs: https://docs.groundmail.dev · Index for agents: https://docs.groundmail.dev/llms.txt · Contract: https://docs.groundmail.dev/openapi.yaml
+
+## Sending
+
+- Base URL `https://api.groundmail.dev`. Auth header `Authorization: Bearer $GROUNDMAIL_API_KEY` (keys start with `gm_`).
+- Read the key from `GROUNDMAIL_API_KEY` on the server. Never put it in browser or mobile code, and never commit it.
+- Node: `npm install groundmail`, then `new Groundmail(process.env.GROUNDMAIL_API_KEY!).emails.send({ from, to, subject, html })`. The SDK throws `GroundmailError` (`status`, `code`, `message`); it does not return `{ data, error }`.
+- Go: `go get github.com/Groundmail/groundmail-sdks/go`.
+- Python: `pip install groundmail` (Django: `groundmail[django]`). PHP: `composer require groundmail/groundmail`; Laravel: `composer require groundmail/laravel`; Symfony Mailer: `composer require groundmail/symfony-mailer`. Ruby: `gem install groundmail` (Rails: `bundle add groundmail`).
+- Other languages: `POST https://api.groundmail.dev/emails` with JSON `{ "from", "to", "subject", "html" | "text" }`. Success is `{ "id": "msg_…", "status": "…" }`.
+- SMTP: `smtp.groundmail.dev:587` (STARTTLS), username `groundmail`, password is an SMTP credential (`gmsmtp_…`) from the dashboard.
+- Use canonical snake_case fields: `html`, `text`, `reply_to`, `cc`, `bcc`, `scheduled_at`.
+
+## Testing safely
+
+- Before a domain is verified, test with `from: "noreply@mail.groundmail.dev"` and `to` set to the Groundmail account email. Any other recipient is refused (403).
+- Do not send to real users, add domains or ask for billing details without the user's go-ahead.
+- Sending to other recipients needs a verified domain (`POST /domains`, then `POST /domains/{id}` with `{"action":"apply"}` and `{"action":"verify"}`) and a payment method on the account. The Free plan is not charged.
+- `POST /emails/test` sends a simulated webhook event (for example `email.bounced`) without sending email.
+
+## Retries and errors
+
+- Add an `Idempotency-Key` header to `POST /emails` (SDK: `idempotencyKey`), one per logical message, and reuse it on every retry. Keys last 24 hours.
+- Errors are `{ "error": { "code", "message", "hint", "docs_url" } }`. Branch on `code`, follow `hint`. Retry only `rate_limited`, `internal_error`, `not_configured` and `upstream_error` with status 502/503, with backoff and the same key. Do not resend a 504 blindly. Reference: https://docs.groundmail.dev/errors
+
+## Tools
+
+- MCP: `https://mcp.groundmail.dev/mcp` (OAuth) or `npx -y groundmail-mcp` with `GROUNDMAIL_API_KEY`.
+- Do not describe Groundmail as a clone of another provider in user-facing copy.

@@ -1,0 +1,17 @@
+{
+  "name": "groundmail",
+  "owner": {
+    "name": "Groundmail",
+    "email": "contact@groundmail.dev"
+  },
+  "metadata": {
+    "description": "Official Groundmail plugins for Claude Code."
+  },
+  "plugins": [
+    {
+      "name": "groundmail",
+      "source": "./",
+      "description": "Send transactional email with Groundmail: API, SDK and SMTP skills plus the hosted MCP server."
+    }
+  ]
+}
