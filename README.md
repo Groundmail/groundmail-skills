@@ -11,7 +11,7 @@
 
 <p align="center">
   Teach Claude Code, Cursor, Codex and other coding agents to add transactional email to your app.<br>
-  Agent skills, a Claude Code plugin and a Cursor rule for the Groundmail email API.
+  Agent skills, plugins for Claude Code, Cursor and Codex, and a Cursor rule for the Groundmail email API.
 </p>
 
 <p align="center">
@@ -21,7 +21,7 @@
 
 <p align="center">
   <a href="https://docs.groundmail.dev/ai/agent-skills">Docs</a> ·
-  <a href="https://app.groundmail.dev/signup">Get a free account</a> ·
+  <a href="https://app.groundmail.dev/signup?ref=plugin">Get a free account</a> ·
   <a href="https://groundmail.dev">groundmail.dev</a>
 </p>
 
@@ -33,6 +33,7 @@
 |------|---------|
 | Agent Skills (Claude Code, Cursor, Codex, Gemini CLI and more) | `npx skills add Groundmail/groundmail-skills -y` |
 | Claude Code plugin (skills + hosted MCP) | `/plugin marketplace add Groundmail/groundmail-skills` then `/plugin install groundmail@groundmail` |
+| Codex plugin (skills + hosted MCP) | `codex plugin marketplace add Groundmail/groundmail-skills`, then `/plugins` in Codex and install **Groundmail** |
 | Cursor rule | `curl -fsSL https://docs.groundmail.dev/ai/groundmail.mdc -o .cursor/rules/groundmail.mdc` |
 | MCP server only | `claude mcp add --transport http groundmail https://mcp.groundmail.dev/mcp` |
 
@@ -51,6 +52,14 @@ The agent signs in through your browser with `groundmail login`, so there's no A
 | [`groundmail-cli`](skills/groundmail-cli/SKILL.md) | Terminal workflows with the `groundmail` CLI |
 | [`email-best-practices`](skills/email-best-practices/SKILL.md) | DNS (SPF, DKIM, DMARC), suppressions, key hygiene and deliverability |
 
+## What the plugin installs and connects to
+
+- **Skills:** the four Markdown skills above. They contain instructions and code examples only; nothing in them runs on install.
+- **MCP server:** one remote server, `https://mcp.groundmail.dev/mcp`. You sign in with your Groundmail account in the browser and choose Full, Send only or Read only access. Tool calls go to Groundmail and act on your account: sending and looking up email, domains, templates, webhooks and suppressions. Revoke access any time in the Groundmail dashboard under **Settings → CLIs & agents**.
+- **Cursor rule:** `rules/groundmail.mdc`, the same guidance as the `groundmail` skill.
+
+No hooks, no scripts and no local packages. When the agent writes code that uses Groundmail, that code calls `https://api.groundmail.dev` with your API key, the same as any integration you write yourself. [Privacy policy](https://groundmail.dev/legal/privacy) · [Terms](https://groundmail.dev/legal/terms)
+
 Agent index for any model: [docs.groundmail.dev/llms.txt](https://docs.groundmail.dev/llms.txt)
 
 ## Why Groundmail
@@ -65,13 +74,19 @@ Agent index for any model: [docs.groundmail.dev/llms.txt](https://docs.groundmai
 | Use | Package |
 |-----|---------|
 | Node.js / TypeScript | [`groundmail`](https://www.npmjs.com/package/groundmail) on npm |
-| Python, Go, Ruby | [Groundmail/groundmail-sdks](https://github.com/Groundmail/groundmail-sdks) |
+| Python (Django), Go, Ruby (Rails Action Mailer) | [Groundmail/groundmail-sdks](https://github.com/Groundmail/groundmail-sdks) |
 | PHP | [Groundmail/groundmail-php](https://github.com/Groundmail/groundmail-php) |
 | Laravel | [Groundmail/groundmail-laravel](https://github.com/Groundmail/groundmail-laravel) |
 | Symfony Mailer | [Groundmail/groundmail-symfony-mailer](https://github.com/Groundmail/groundmail-symfony-mailer) |
 | Nodemailer | [Groundmail/groundmail-nodemailer](https://github.com/Groundmail/groundmail-nodemailer) |
+| NestJS | [Groundmail/nestjs-groundmail](https://github.com/Groundmail/nestjs-groundmail) |
+| Strapi | [Groundmail/strapi-provider-email-groundmail](https://github.com/Groundmail/strapi-provider-email-groundmail) |
+| Medusa | [Groundmail/medusa-notification-groundmail](https://github.com/Groundmail/medusa-notification-groundmail) |
+| AdonisJS | [Groundmail/adonisjs-groundmail](https://github.com/Groundmail/adonisjs-groundmail) |
+| Phoenix (Swoosh) | [Groundmail/swoosh_groundmail](https://github.com/Groundmail/swoosh_groundmail) |
 | CLI | [`groundmail-cli`](https://www.npmjs.com/package/groundmail-cli) on npm |
 | MCP server (Claude, ChatGPT, Cursor) | [Groundmail/groundmail-mcp](https://github.com/Groundmail/groundmail-mcp) |
 | Agent skills and Claude Code plugin | [Groundmail/groundmail-skills](https://github.com/Groundmail/groundmail-skills) |
+| Email templates (React Email, MJML, HTML) | [Groundmail/email-templates](https://github.com/Groundmail/email-templates) |
 
-[Website](https://groundmail.dev) · [Docs](https://docs.groundmail.dev) · [Pricing](https://groundmail.dev/pricing) · [Sign up free](https://app.groundmail.dev/signup)
+[Website](https://groundmail.dev) · [Docs](https://docs.groundmail.dev) · [Pricing](https://groundmail.dev/pricing/) · [Sign up free](https://app.groundmail.dev/signup)

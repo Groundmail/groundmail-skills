@@ -1,14 +1,17 @@
 {
   "name": "groundmail",
-  "version": "0.5.14",
+  "displayName": "Groundmail",
+  "version": "0.14.3",
   "description": "Send transactional email with Groundmail from Cursor: API, SDK and SMTP skills, a project rule and the hosted Groundmail MCP server.",
   "author": {
     "name": "Groundmail",
-    "email": "contact@groundmail.dev",
-    "url": "https://groundmail.dev"
+    "email": "contact@groundmail.dev"
   },
-  "homepage": "https://docs.groundmail.dev/ai/agent-skills",
+  "homepage": "https://docs.groundmail.dev/ai/agent-skills?ref=plugin",
   "repository": "https://github.com/Groundmail/groundmail-skills",
   "license": "MIT",
-  "keywords": ["email", "transactional-email", "smtp", "mcp", "groundmail"]
+  "logo": "assets/logo.png",
+  "category": "integrations",
+  "keywords": ["email", "transactional-email", "smtp", "mcp", "groundmail"],
+  "mcpServers": "./.mcp.json"
 }

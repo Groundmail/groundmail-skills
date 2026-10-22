@@ -88,17 +88,24 @@ Restart Cursor after editing. The dashboard **Install in Cursor** button writes 
 | `send_email` | `from`, `to`, `subject`, `html`/`text`/`reply_to`, or `template_id`/`template_alias` + `variables` |
 | `list_emails` / `get_email` | Recent sends, status of one send |
 | `list_domains` / `create_domain` | Sending domains |
-| `apply_domain_dns` / `verify_domain` | Publish DNS (Cloudflare, GoDaddy), then verify |
+| `apply_domain_dns` / `verify_domain` | Publish DNS (Cloudflare, Vercel, GoDaddy), then verify |
 | `list_templates` / `get_template` / `create_template` / `publish_template` | Templates |
 | `list_webhooks` / `create_webhook` / `delete_webhook` | Webhook endpoints |
 | `send_test_webhook_event` | Simulated event to webhooks; no email sent |
 | `list_suppressions` / `add_suppression` / `remove_suppression` | Suppression list |
+| `list_category_opt_outs` / `remove_category_opt_out` | One-click unsubscribes from product or newsletter email (per tenant or account-wide) |
+| `validate_email` | Check one address: `valid` / `risky` / `invalid`, reasons, typo suggestion. Free; sends nothing |
 | `get_deliverability` | Best-effort metrics for `7d` or `30d` (not inbox placement guarantees) |
+| `enable_dmarc_monitoring` / `get_dmarc_report` | DMARC monitoring: record to publish, then sources, pass rates and enforcement readiness |
+| `list_tenants` / `create_tenant` / `get_tenant` / `update_tenant` / `pause_tenant` / `resume_tenant` / `get_tenant_stats` | Tenants: one per customer you send for (Scale and Dedicated plans) |
+| `import_from_provider` / `get_import_report` | Beta. Import from SendGrid, Postmark or Mailgun (`dry_run` first), then read the report |
+
+Full list with one line per tool: https://docs.groundmail.dev/ai/mcp
 
 ## Rules for agents
 
 1. First send: `from` `noreply@mail.groundmail.dev`, `to` the user's Groundmail account email. Other recipients are refused until a domain is verified and a payment method is on file.
-2. Confirm with the user before `send_email` to anyone but them, `create_domain`, `delete_webhook` or `remove_suppression`.
+2. Confirm with the user before `send_email` to anyone but them, `create_domain`, `delete_webhook`, `remove_suppression` or `remove_category_opt_out`.
 3. Failed tool calls return the API message, `code: …` with the HTTP status, and a `how to fix` link to https://docs.groundmail.dev/errors#<code>. Follow it instead of retrying blindly.
 4. `send_email` does not take an idempotency key. For app code that retries, use the SDK or HTTP with `Idempotency-Key`.
 

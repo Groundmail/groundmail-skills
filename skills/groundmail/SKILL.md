@@ -26,6 +26,7 @@ Transactional email API on mail servers and IPs Groundmail owns and runs. Send w
 3. Test on the user's own address first (sandbox below). Ask before emailing anyone else, adding a domain or touching billing.
 4. Send every email with an `Idempotency-Key` and reuse it on retries.
 5. On errors, branch on `error.code` and follow `error.hint`.
+6. No account yet: the user signs up free at https://app.groundmail.dev/signup?ref=plugin (test sends to your own address need no card; sending to anyone else needs a card on file, not charged on Free). Never create an account for them.
 
 Related skills: `groundmail-mcp`, `groundmail-cli`, `email-best-practices`.
 
@@ -130,9 +131,11 @@ Host `smtp.groundmail.dev`, port `587` (STARTTLS), username `groundmail`, passwo
 
 Anything outside these rules returns `403` `forbidden` with a `hint`, and nothing is sent. Test sends are real deliveries to the account owner and count toward quota.
 
+To test without delivering anything: send to a simulator address (`delivered@`, `bounce@`, `block@`, `complaint@`, `suppressed@`, `delayed@simulator.groundmail.dev`; `bounce+tag@…` works) with any key, or use a test key (`gm_test_…`, `POST /api-keys` with `"test": true`). The response and webhooks carry `"test": true`; nothing counts toward quota. Docs: https://docs.groundmail.dev/testing
+
 `POST /emails/test` with `{"event":"email.bounced"}` delivers a simulated webhook event without sending email.
 
-Plans: Free ($0, 3,000/month, 100/day, 1 domain, never charged, card required to send to others) · Pro (from $20/month) · Scale (from $90/month) · Dedicated (from $299/month, your own servers and IPs). Do not recommend a plan change without the user asking.
+Plans: Free ($0, 3,000/month, 100/day, 1 domain, never charged, card required to send to others) · Pro (from $20/month) · Scale (from $90/month) · Dedicated (from $299/month, your own servers and IPs). Every tier, price and limit as JSON: https://docs.groundmail.dev/pricing.json. Do not recommend a plan change without the user asking.
 
 Docs: https://docs.groundmail.dev/ai/safe-defaults
 
@@ -168,10 +171,12 @@ A few older endpoints return `error` as a string with `code`, `message`, `hint` 
 | `unauthorized` | 401 | Fix the `Authorization: Bearer gm_…` header |
 | `forbidden` | 403 | Follow `hint`: verify the domain, keep sandbox sends to the account email, or ask the user to add a payment method |
 | `insufficient_scope` | 403 | Use a key with the right scope |
+| `tenants_not_enabled` | 403 | The request named a tenant on a plan without tenants (Scale and Dedicated have them). Remove `tenant` or tell the user |
 | `not_found` | 404 | List the collection to find the right id |
 | `conflict` | 409 | Reuse the existing resource |
 | `idempotency_conflict` | 409 | New key for a new message; wait and retry for in-progress |
 | `plan_limit` / `domain_limit` | 429 / 403 | Stop and tell the user (`upgrade_url`) |
+| `daily_ramp_limit` | 429 | Daily ramp-up limit (the new account's, or the tenant's when `details.tenant` is set): do not retry now. Send the rest after `details.resets_at` (00:00 UTC); upgrading does not lift it |
 | `rate_limited` | 429 | Wait `Retry-After`, retry with the same key |
 | `upstream_error` | 502 / 503 | Retry with backoff and the same key |
 | `upstream_error` | 504 | May have been sent: check `GET /emails` before anything else |
@@ -198,6 +203,7 @@ Explain when the user still needs DNS or registrar access.
 - React Email: pass `react: <Component />` with `@react-email/render` installed; the SDK renders it to HTML. Guide: https://docs.groundmail.dev/guides/react-email
 - Webhooks: `POST /webhooks`; events include delivered, bounced, complained. Verify signatures with the SDK helper.
 - `GET /emails`, `GET /emails/{id}` for status; `GET /deliverability` for best-effort metrics (not inbox placement guarantees).
+- Sending for your own customers: create a tenant per customer (`POST /tenants` with `external_id`), add their domain with `tenant`, and send with `tenant: "<external_id>"`. Each tenant has its own suppressions, stats, ramp and pause switch; keys and webhook endpoints can be limited to tenants. Scale and Dedicated plans. Guide: https://docs.groundmail.dev/guides/platforms
 
 ---
 
