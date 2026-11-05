@@ -26,7 +26,8 @@ Transactional email API on mail servers and IPs Groundmail owns and runs. Send w
 3. Test on the user's own address first (sandbox below). Ask before emailing anyone else, adding a domain or touching billing.
 4. Send every email with an `Idempotency-Key` and reuse it on retries.
 5. On errors, branch on `error.code` and follow `error.hint`.
-6. No account yet: the user signs up free at https://app.groundmail.dev/signup?ref=plugin (test sends to your own address need no card; sending to anyone else needs a card on file, not charged on Free). Never create an account for them.
+6. No account yet: the user signs up free at https://app.groundmail.dev/signup?ref=plugin (test sends to your own address need nothing else; sending to anyone else needs billing set up in the dashboard, not charged on Free). Never create an account for them.
+7. Never ask for or accept payment card numbers, passwords, government ID numbers, health information or other sensitive personal data in chat; the user enters billing and account details only in the Groundmail dashboard.
 
 Related skills: `groundmail-mcp`, `groundmail-cli`, `email-best-practices`.
 
@@ -127,7 +128,7 @@ Host `smtp.groundmail.dev`, port `587` (STARTTLS), username `groundmail`, passwo
 |-------|--------|------|-------|
 | Sandbox | `noreply@mail.groundmail.dev` | The Groundmail account email only | Nothing |
 | Own domain, to self | Address on a verified domain | The account email only | Verified domain |
-| Production | Address on a verified domain | Anyone | Verified domain + payment method on file |
+| Production | Address on a verified domain | Anyone | Verified domain + billing set up in the dashboard |
 
 Anything outside these rules returns `403` `forbidden` with a `hint`, and nothing is sent. Test sends are real deliveries to the account owner and count toward quota.
 
@@ -135,7 +136,9 @@ To test without delivering anything: send to a simulator address (`delivered@`, 
 
 `POST /emails/test` with `{"event":"email.bounced"}` delivers a simulated webhook event without sending email.
 
-Plans: Free ($0, 3,000/month, 100/day, 1 domain, never charged, card required to send to others) · Pro (from $20/month) · Scale (from $90/month) · Dedicated (from $299/month, your own servers and IPs). Every tier, price and limit as JSON: https://docs.groundmail.dev/pricing.json. Do not recommend a plan change without the user asking.
+To test signup or password-reset emails end to end (with any email provider): each team has a test domain, `<team>.test.groundmail.dev`; mail to any address there is caught, never delivered. Use a fresh address per test (`groundmail.testInbox.address()`), then `groundmail.testInbox.waitFor({ to })` (or `GET /test-inbox/wait?to=…&timeout=30`, `408 timeout` when nothing arrives) returns the email with `code` and `links` extracted. 100 test emails a month free. Docs: https://docs.groundmail.dev/email-testing
+
+Plans: Free ($0, 3,000/month, 100/day, 3 domains, never charged, billing set up in the dashboard to send to others) · Pay as you go ($15/month with 20,000 emails included, then from $0.70 per 1,000, less as volume grows; sent and received emails count the same; every feature included) · Dedicated (from $299/month, your own servers and IPs). Every tier, price and limit as JSON: https://docs.groundmail.dev/pricing.json. Do not recommend a plan change without the user asking.
 
 Docs: https://docs.groundmail.dev/ai/safe-defaults
 
@@ -169,9 +172,9 @@ A few older endpoints return `error` as a string with `code`, `message`, `hint` 
 |------|--------|---------|
 | `validation_error` | 400 / 422 | Fix the field in `message`/`details`. 422 = suppressed or opted-out recipients: do not resend to them |
 | `unauthorized` | 401 | Fix the `Authorization: Bearer gm_…` header |
-| `forbidden` | 403 | Follow `hint`: verify the domain, keep sandbox sends to the account email, or ask the user to add a payment method |
+| `forbidden` | 403 | Follow `hint`: verify the domain, keep sandbox sends to the account email, or ask the user to set up billing in the dashboard |
 | `insufficient_scope` | 403 | Use a key with the right scope |
-| `tenants_not_enabled` | 403 | The request named a tenant on a plan without tenants (Scale and Dedicated have them). Remove `tenant` or tell the user |
+| `tenants_not_enabled` | 403 | The request named a tenant on a plan without tenants (pay as you go and Dedicated have them). Remove `tenant` or tell the user |
 | `not_found` | 404 | List the collection to find the right id |
 | `conflict` | 409 | Reuse the existing resource |
 | `idempotency_conflict` | 409 | New key for a new message; wait and retry for in-progress |
@@ -203,7 +206,7 @@ Explain when the user still needs DNS or registrar access.
 - React Email: pass `react: <Component />` with `@react-email/render` installed; the SDK renders it to HTML. Guide: https://docs.groundmail.dev/guides/react-email
 - Webhooks: `POST /webhooks`; events include delivered, bounced, complained. Verify signatures with the SDK helper.
 - `GET /emails`, `GET /emails/{id}` for status; `GET /deliverability` for best-effort metrics (not inbox placement guarantees).
-- Sending for your own customers: create a tenant per customer (`POST /tenants` with `external_id`), add their domain with `tenant`, and send with `tenant: "<external_id>"`. Each tenant has its own suppressions, stats, ramp and pause switch; keys and webhook endpoints can be limited to tenants. Scale and Dedicated plans. Guide: https://docs.groundmail.dev/guides/platforms
+- Sending for your own customers: create a tenant per customer (`POST /tenants` with `external_id`), add their domain with `tenant`, and send with `tenant: "<external_id>"`. Each tenant has its own suppressions, stats, ramp and pause switch; keys and webhook endpoints can be limited to tenants. Pay as you go and Dedicated plans. Guide: https://docs.groundmail.dev/guides/platforms
 
 ---
 

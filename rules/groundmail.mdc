@@ -14,6 +14,7 @@ Groundmail is a transactional email API. Docs: https://docs.groundmail.dev · In
 - Read the key from `GROUNDMAIL_API_KEY` on the server. Never put it in browser or mobile code, and never commit it.
 - Node: `npm install groundmail`, then `new Groundmail(process.env.GROUNDMAIL_API_KEY!).emails.send({ from, to, subject, html })`. The SDK throws `GroundmailError` (`status`, `code`, `message`); it does not return `{ data, error }`.
 - Go: `go get github.com/Groundmail/groundmail-sdks/go`.
+- Rust: `cargo add groundmail`.
 - Python: `pip install groundmail` (Django: `groundmail[django]`). PHP: `composer require groundmail/groundmail`; Laravel: `composer require groundmail/laravel`; Symfony Mailer: `composer require groundmail/symfony-mailer`. Ruby: `gem install groundmail` (Rails: `bundle add groundmail`).
 - Other languages: `POST https://api.groundmail.dev/emails` with JSON `{ "from", "to", "subject", "html" | "text" }`. Success is `{ "id": "msg_…", "status": "…" }`.
 - SMTP: `smtp.groundmail.dev:587` (STARTTLS), username `groundmail`, password is an SMTP credential (`gmsmtp_…`) from the dashboard.

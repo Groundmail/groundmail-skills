@@ -41,10 +41,10 @@ Guidance for agents shipping password resets, receipts, invites, and other trans
 | Mode | `from` | `to` |
 |------|--------|------|
 | Sandbox self-test | `noreply@mail.groundmail.dev` | Account email only |
-| Verified domain (no payment method) | Address on verified customer domain | Account email only |
+| Verified domain (billing not set up) | Address on verified customer domain | Account email only |
 | Free production / paid | Address on verified customer domain | Real recipients |
 
-Never use the sandbox sender for customer-facing production mail. Unlock Free production with a verified domain and a payment method on file.
+Never use the sandbox sender for customer-facing production mail. Unlock Free production with a verified domain and billing set up in the dashboard.
 
 ---
 

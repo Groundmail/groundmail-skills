@@ -98,6 +98,16 @@ groundmail templates get --id tpl_…
 groundmail templates publish --id tpl_…
 ```
 
+### Agent mailboxes
+
+```bash
+groundmail mailboxes create --local-part signup-bot
+groundmail mailboxes wait signup-bot@agents.groundmailbox.com --since 2026-11-05T12:00:00Z
+groundmail mailboxes reply <mailbox> mbm_… --text …
+```
+
+See the `groundmail-mailboxes` skill.
+
 ### API keys
 
 ```bash

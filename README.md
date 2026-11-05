@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://groundmail.dev">
+  <a href="https://groundmail.dev?utm_source=github&utm_medium=readme&utm_campaign=groundmail-skills">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://app.groundmail.dev/images/github/readme-logo-dark.png">
       <img alt="Groundmail" src="https://app.groundmail.dev/images/github/readme-logo-light.png" height="44">
@@ -20,9 +20,9 @@
 </p>
 
 <p align="center">
-  <a href="https://docs.groundmail.dev/ai/agent-skills">Docs</a> ·
-  <a href="https://app.groundmail.dev/signup?ref=plugin">Get a free account</a> ·
-  <a href="https://groundmail.dev">groundmail.dev</a>
+  <a href="https://docs.groundmail.dev/ai/agent-skills?utm_source=github&utm_medium=readme&utm_campaign=groundmail-skills">Docs</a> ·
+  <a href="https://app.groundmail.dev/signup?ref=plugin&utm_source=github&utm_medium=readme&utm_campaign=groundmail-skills">Get a free account</a> ·
+  <a href="https://groundmail.dev?utm_source=github&utm_medium=readme&utm_campaign=groundmail-skills">groundmail.dev</a>
 </p>
 
 ---
@@ -34,7 +34,7 @@
 | Agent Skills (Claude Code, Cursor, Codex, Gemini CLI and more) | `npx skills add Groundmail/groundmail-skills -y` |
 | Claude Code plugin (skills + hosted MCP) | `/plugin marketplace add Groundmail/groundmail-skills` then `/plugin install groundmail@groundmail` |
 | Codex plugin (skills + hosted MCP) | `codex plugin marketplace add Groundmail/groundmail-skills`, then `/plugins` in Codex and install **Groundmail** |
-| Cursor rule | `curl -fsSL https://docs.groundmail.dev/ai/groundmail.mdc -o .cursor/rules/groundmail.mdc` |
+| Cursor rule | `curl -fsSL https://docs.groundmail.dev/ai/groundmail.mdc?utm_source=github&utm_medium=readme&utm_campaign=groundmail-skills -o .cursor/rules/groundmail.mdc` |
 | MCP server only | `claude mcp add --transport http groundmail https://mcp.groundmail.dev/mcp` |
 
 Then ask your agent something like:
@@ -58,15 +58,15 @@ The agent signs in through your browser with `groundmail login`, so there's no A
 - **MCP server:** one remote server, `https://mcp.groundmail.dev/mcp`. You sign in with your Groundmail account in the browser and choose Full, Send only or Read only access. Tool calls go to Groundmail and act on your account: sending and looking up email, domains, templates, webhooks and suppressions. Revoke access any time in the Groundmail dashboard under **Settings → CLIs & agents**.
 - **Cursor rule:** `rules/groundmail.mdc`, the same guidance as the `groundmail` skill.
 
-No hooks, no scripts and no local packages. When the agent writes code that uses Groundmail, that code calls `https://api.groundmail.dev` with your API key, the same as any integration you write yourself. [Privacy policy](https://groundmail.dev/legal/privacy) · [Terms](https://groundmail.dev/legal/terms)
+No hooks, no scripts and no local packages. When the agent writes code that uses Groundmail, that code calls `https://api.groundmail.dev` with your API key, the same as any integration you write yourself. [Privacy policy](https://groundmail.dev/legal/privacy?utm_source=github&utm_medium=readme&utm_campaign=groundmail-skills) · [Terms](https://groundmail.dev/legal/terms?utm_source=github&utm_medium=readme&utm_campaign=groundmail-skills)
 
-Agent index for any model: [docs.groundmail.dev/llms.txt](https://docs.groundmail.dev/llms.txt)
+Agent index for any model: [docs.groundmail.dev/llms.txt](https://docs.groundmail.dev/llms.txt?utm_source=github&utm_medium=readme&utm_campaign=groundmail-skills)
 
 ## Why Groundmail
 
 - **Our own mail servers and IP space.** Your password resets and receipts don't share a pool with bulk marketing senders.
 - **Transactional email only.** No newsletters or cold outreach on the platform, which keeps the sending reputation clean.
-- **Start free.** 3,000 emails a month on the Free plan; Pro is 50,000 emails for $20/month. Dedicated IPs on Scale.
+- **Start free.** Free covers 3,000 emails a month. After that, pay as you go is $15 a month with 20,000 emails included, then from $0.70 per 1,000, less as you grow. [Pricing](https://groundmail.dev/pricing/?utm_source=github&utm_medium=readme&utm_campaign=groundmail-skills)
 - **Built for code and for agents.** REST API, SMTP, SDKs for Node, Python, Go, PHP and Ruby, a CLI, and an MCP server for Claude, ChatGPT and Cursor.
 
 ## All Groundmail libraries
@@ -89,4 +89,4 @@ Agent index for any model: [docs.groundmail.dev/llms.txt](https://docs.groundmai
 | Agent skills and Claude Code plugin | [Groundmail/groundmail-skills](https://github.com/Groundmail/groundmail-skills) |
 | Email templates (React Email, MJML, HTML) | [Groundmail/email-templates](https://github.com/Groundmail/email-templates) |
 
-[Website](https://groundmail.dev) · [Docs](https://docs.groundmail.dev) · [Pricing](https://groundmail.dev/pricing/) · [Sign up free](https://app.groundmail.dev/signup)
+[Website](https://groundmail.dev?utm_source=github&utm_medium=readme&utm_campaign=groundmail-skills) · [Docs](https://docs.groundmail.dev?utm_source=github&utm_medium=readme&utm_campaign=groundmail-skills) · [Pricing](https://groundmail.dev/pricing/?utm_source=github&utm_medium=readme&utm_campaign=groundmail-skills) · [Sign up free](https://app.groundmail.dev/signup?utm_source=github&utm_medium=readme&utm_campaign=groundmail-skills)

@@ -1,7 +1,7 @@
 {
   "name": "groundmail",
   "displayName": "Groundmail",
-  "version": "0.14.3",
+  "version": "0.29.0",
   "description": "Send transactional email with Groundmail from Claude Code: API, SDK and SMTP skills plus the hosted Groundmail MCP server.",
   "author": {
     "name": "Groundmail",

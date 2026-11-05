@@ -1,7 +1,7 @@
 {
   "name": "groundmail",
   "displayName": "Groundmail",
-  "version": "0.14.3",
+  "version": "0.29.0",
   "description": "Send transactional email with Groundmail from Cursor: API, SDK and SMTP skills, a project rule and the hosted Groundmail MCP server.",
   "author": {
     "name": "Groundmail",
