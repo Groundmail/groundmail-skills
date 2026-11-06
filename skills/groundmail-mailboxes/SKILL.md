@@ -18,20 +18,29 @@ Docs: https://docs.groundmail.dev/guides/agent-mailboxes
 
 ## Before you start
 
-A Groundmail workspace is required, and a person approves the sign-in once:
+No account or sign-in is needed to receive mail:
 
 ```bash
-npx groundmail-cli login
+npx groundmail-cli mailboxes create --instant --local-part signup-bot
 ```
 
-The command prints a link and a code. Show them to your person. It finishes on its own once they approve.
+It prints the address and a key limited to that mailbox, shown once. Set the key as `GROUNDMAIL_API_KEY`.
 
-Three mailboxes are free. Hosted addresses are on `agents.groundmailbox.com` and need no DNS.
+To send, name your person. They get a code by email and give it to you:
+
+```bash
+npx groundmail-cli mailboxes owner <mailbox> --owner-email person@example.com
+npx groundmail-cli mailboxes verify <mailbox> --code 482913
+```
+
+Until then you can only email that person, 10 a day. Mailboxes that aren't verified are deleted after 30 days, or after 7 with no mail.
+
+If your person already has a workspace, use `npx groundmail-cli login` instead. Hosted addresses are on `agents.groundmailbox.com` and need no DNS.
 
 ## Get a code from a sign-up
 
 ```bash
-groundmail mailboxes create --local-part signup-bot
+groundmail mailboxes create --instant --local-part signup-bot
 # Note the time, submit the sign-up form with the address, then wait:
 groundmail mailboxes wait signup-bot@agents.groundmailbox.com --since 2026-11-05T12:00:00Z
 ```
