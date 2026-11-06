@@ -10,7 +10,7 @@
 <h1 align="center">Groundmail agent skills</h1>
 
 <p align="center">
-  Teach Claude Code, Cursor, Codex and other coding agents to add transactional email to your app.<br>
+  Teach Claude Code, Cursor, Codex and other coding agents to add Groundmail to your app.<br>
   Agent skills, plugins for Claude Code, Cursor and Codex, and a Cursor rule for the Groundmail email API.
 </p>
 
@@ -64,8 +64,8 @@ Agent index for any model: [docs.groundmail.dev/llms.txt](https://docs.groundmai
 
 ## Why Groundmail
 
-- **Our own mail servers and IP space.** Your password resets and receipts don't share a pool with bulk marketing senders.
-- **Transactional email only.** No newsletters or cold outreach on the platform, which keeps the sending reputation clean.
+- **Separate streams.** Your sign-in codes never wait behind a newsletter.
+- **We run the servers.** Our own mail servers and IP space, so we can see and fix delivery problems ourselves.
 - **Start free.** Free covers 3,000 emails a month. After that, pay as you go is $15 a month with 20,000 emails included, then from $0.70 per 1,000, less as you grow. [Pricing](https://groundmail.dev/pricing/?utm_source=github&utm_medium=readme&utm_campaign=groundmail-skills)
 - **Built for code and for agents.** REST API, SMTP, SDKs for Node, Python, Go, PHP and Ruby, a CLI, and an MCP server for Claude, ChatGPT and Cursor.
 
